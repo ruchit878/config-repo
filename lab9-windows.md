@@ -1,7 +1,7 @@
-# **Lab 9: Set Up Event-Based Messaging Between Microservices Using Spring Cloud Bus (Spring Boot 3.4.x, Windows Edition)**
+# **Lab 9: Set Up Event-Based Messaging Between Microservices Using Spring Cloud Bus (Spring Boot 3.4.5, Windows Edition)**
 
 ## **Objective**
-Learn how to use **Spring Cloud Bus** with **Spring Boot 3.4.x** to propagate configuration changes (and other events) among microservices in real time — this time on **Windows 10/11** with **PowerShell**. You’ll integrate **Spring Cloud Config Server**, **Kafka**, and **Spring Cloud Bus** so that multiple microservices automatically refresh updates without manual restarts.
+Learn how to use **Spring Cloud Bus** with **Spring Boot 3.4.5** to propagate configuration changes (and other events) among microservices in real time — this time on **Windows 10/11** with **PowerShell**. You’ll integrate **Spring Cloud Config Server**, **Kafka**, and **Spring Cloud Bus** so that multiple microservices automatically refresh updates without manual restarts.
 
 ---
 
@@ -11,7 +11,7 @@ Learn how to use **Spring Cloud Bus** with **Spring Boot 3.4.x** to propagate c
 2. **Git** — `git --version`  
 3. **Maven** (or use the provided `mvnw`) — `mvn -v`  
 4. **IDE** (IntelliJ IDEA, Eclipse, VS Code)  
-5. **Apache Kafka 3.x** with ZooKeeper (ZIP extracted to `C:\kafka`)  
+5. **Apache Kafka 3.4.5** with ZooKeeper (ZIP extracted to `C:\kafka`)  
 6. **Windows PowerShell 5+** or **PowerShell Core** (run as *Administrator* when noted)  
 
 > **Firewall note:** open ports **8888**, **9092**, and **2181** or disable Defender temporarily.  
