@@ -180,7 +180,7 @@ Check both services' logs for matching traceId.
 
 ## **Part 3: Run and View Zipkin UI**
 
-### Step 16: Start Zipkin using Docker
+### Step 16: Start Zipkin using Docker (Make sure to run Docker Desktop first)
 ```bash
 docker run -d -p 9411:9411 openzipkin/zipkin
 ```
