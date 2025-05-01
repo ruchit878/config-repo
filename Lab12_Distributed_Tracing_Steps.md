@@ -1,7 +1,7 @@
-# **Lab 12: Implement Distributed Tracing with Spring Boot 3.4.1 Using Micrometer Tracing and Zipkin**
+# **Lab 12: Implement Distributed Tracing with Spring Boot 3.4.5 Using Micrometer Tracing and Zipkin**
 
 ## **Objective**
-Enable distributed tracing across multiple microservices using **Micrometer Tracing with Brave**, the replacement for Spring Cloud Sleuth in Spring Boot 3.4.1. You'll configure two microservices (`UserService` and `OrderService`) to propagate trace IDs and spans automatically and visualize them using **Zipkin**.
+Enable distributed tracing across multiple microservices using **Micrometer Tracing with Brave**, the replacement for Spring Cloud Sleuth in Spring Boot 3.4.5. You'll configure two microservices (`UserService` and `OrderService`) to propagate trace IDs and spans automatically and visualize them using **Zipkin**.
 
 ---
 
@@ -22,7 +22,7 @@ Ensure the following tools are installed and running:
 - Select:
   - Group: `com.microservices`
   - Artifact: `user-service`
-  - Spring Boot: `3.4.1`
+  - Spring Boot: `3.4.5`
   - Dependencies:
     - Spring Web
     - Spring Boot Actuator
@@ -78,7 +78,7 @@ logging.pattern.level=%5p [${spring.application.name:},traceId=%X{traceId},spanI
 ### Step 6: Run UserService
 Open terminal in the project folder and run:
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ### Step 7: Test Endpoint
@@ -98,7 +98,7 @@ Check the console log for traceId and spanId.
 - Select:
   - Group: `com.microservices`
   - Artifact: `order-service`
-  - Spring Boot: `3.4.1`
+  - Spring Boot: `3.4.5`
   - Dependencies:
     - Spring Web
     - Spring Boot Actuator
@@ -165,7 +165,7 @@ logging.pattern.level=%5p [${spring.application.name:},traceId=%X{traceId},spanI
 
 ### Step 14: Run OrderService
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ### Step 15: Test Endpoint
