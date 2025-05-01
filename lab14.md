@@ -116,7 +116,7 @@ Learn how to install and configure **Jenkins** to automate the build, testing, a
 
 ### **Part 4: Creating a Jenkins Pipeline**
 
-17. **Install Pipeline plugins (Pipeline, Pipeline: API, and Pipeline: Stage View).**  
+17. **Install Pipeline plugins (Pipeline: API, and Pipeline: Stage View).**  
     - Navigate to **Manage Jenkins** → **Manage Plugins**, search for the plugins above, and install them.
 
 18. **Create a new pipeline job.**  
