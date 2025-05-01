@@ -1,4 +1,3 @@
-
 # **Lab 12: Implement Distributed Tracing with Spring Boot 3.4.1 Using Micrometer Tracing and Zipkin**
 
 ## **Objective**
@@ -6,29 +5,35 @@ Enable distributed tracing across multiple microservices using **Micrometer Trac
 
 ---
 
-## **Step-by-Step Instructions**
+## **Prerequisites**
 
-### 🔧 Setup
-
-1. **Ensure the following tools are installed and running**:
-   - Java 17+
-   - Maven
-   - Docker Desktop (Running)
-   - IDE (IntelliJ IDEA, Eclipse, or Visual Studio Code)
+Ensure the following tools are installed and running:
+- **Java 17+**
+- **Maven**
+- **Docker Desktop** (Running)
+- **IDE**: IntelliJ IDEA, Eclipse, or Visual Studio Code
 
 ---
 
-### 🛠️ UserService Setup
+## **Part 1: Create and Configure UserService**
 
-2. **Generate a Spring Boot project** at [start.spring.io](https://start.spring.io):
-   - Group: `com.microservices`
-   - Artifact: `user-service`
-   - Spring Boot: `3.4.1`
-   - Dependencies: Spring Web, Spring Boot Actuator
+### Step 1: Generate Project
+- Visit [https://start.spring.io](https://start.spring.io)
+- Select:
+  - Group: `com.microservices`
+  - Artifact: `user-service`
+  - Spring Boot: `3.4.1`
+  - Dependencies:
+    - Spring Web
+    - Spring Boot Actuator
+- Click **Generate** and extract the ZIP.
 
-3. **Extract and import the project into your IDE**.
+### Step 2: Import into IDE
+- Open your IDE
+- Choose "Open Project" or "Import Maven Project"
+- Navigate to and select the extracted `user-service` folder
 
-4. **Add dependencies in `pom.xml`**:
+### Step 3: Add Tracing Dependencies in `pom.xml`
 ```xml
 <dependency>
     <groupId>io.micrometer</groupId>
@@ -40,7 +45,8 @@ Enable distributed tracing across multiple microservices using **Micrometer Trac
 </dependency>
 ```
 
-5. **Create `UserController.java`** in `src/main/java/com/microservices/userservice/`:
+### Step 4: Create a REST Controller
+Create file `src/main/java/com/microservices/userservice/UserController.java`:
 ```java
 package com.microservices.userservice;
 
@@ -56,7 +62,8 @@ public class UserController {
 }
 ```
 
-6. **Update `application.properties`**:
+### Step 5: Configure Application Properties
+Edit `src/main/resources/application.properties`:
 ```properties
 server.port=8081
 spring.application.name=user-service
@@ -68,30 +75,44 @@ management.endpoint.env.show-values=always
 logging.pattern.level=%5p [${spring.application.name:},traceId=%X{traceId},spanId=%X{spanId}]
 ```
 
-7. **Run UserService**:
+### Step 6: Run UserService
+Open terminal in the project folder and run:
 ```bash
 ./mvnw spring-boot:run
 ```
 
-8. **Test UserService endpoint**:
+### Step 7: Test Endpoint
+In browser or Postman:
 ```
 http://localhost:8081/users
 ```
 
+Check the console log for traceId and spanId.
+
 ---
 
-### 🛠️ OrderService Setup
+## **Part 2: Create and Configure OrderService**
 
-9. **Generate project at [start.spring.io](https://start.spring.io)**:
-   - Group: `com.microservices`
-   - Artifact: `order-service`
-   - Dependencies: Spring Web, Spring Boot Actuator, Spring Reactive Web
+### Step 8: Generate Project
+- Visit [https://start.spring.io](https://start.spring.io)
+- Select:
+  - Group: `com.microservices`
+  - Artifact: `order-service`
+  - Spring Boot: `3.4.1`
+  - Dependencies:
+    - Spring Web
+    - Spring Boot Actuator
+    - Spring Reactive Web
+- Click **Generate** and extract the ZIP.
 
-10. **Import project into IDE**.
+### Step 9: Import into IDE
+Same as UserService: File > Open or Import Project and select `order-service`.
 
-11. **Add dependencies to `pom.xml`** (same as Step 4).
+### Step 10: Add Tracing Dependencies
+Same two dependencies as `UserService` in the `pom.xml`
 
-12. **Create `OrderController.java`**:
+### Step 11: Create Controller
+`src/main/java/com/microservices/orderservice/OrderController.java`:
 ```java
 package com.microservices.orderservice;
 
@@ -120,7 +141,8 @@ public class OrderController {
 }
 ```
 
-13. **Add WebClient bean in `OrderServiceApplication.java`**:
+### Step 12: Add WebClient Bean
+In `OrderServiceApplication.java`:
 ```java
 @Bean
 public WebClient.Builder webClientBuilder() {
@@ -128,7 +150,8 @@ public WebClient.Builder webClientBuilder() {
 }
 ```
 
-14. **Update `application.properties`**:
+### Step 13: Configure Application Properties
+Edit `src/main/resources/application.properties`:
 ```properties
 server.port=8082
 spring.application.name=order-service
@@ -140,50 +163,53 @@ management.endpoint.env.show-values=always
 logging.pattern.level=%5p [${spring.application.name:},traceId=%X{traceId},spanId=%X{spanId}]
 ```
 
-15. **Run OrderService**:
+### Step 14: Run OrderService
 ```bash
 ./mvnw spring-boot:run
 ```
 
-16. **Test OrderService endpoint**:
+### Step 15: Test Endpoint
+```bash
+curl http://localhost:8082/orders
 ```
-http://localhost:8082/orders
-```
+or visit it in browser.
+
+Check both services' logs for matching traceId.
 
 ---
 
-### 📊 Zipkin Setup
+## **Part 3: Run and View Zipkin UI**
 
-17. **Start Zipkin using Docker**:
+### Step 16: Start Zipkin using Docker
 ```bash
 docker run -d -p 9411:9411 openzipkin/zipkin
 ```
 
-18. **Open Zipkin UI**:
+### Step 17: Access Zipkin UI
+Go to:
 ```
 http://localhost:9411
 ```
 
-19. **Trigger request to generate a trace**:
-```
-curl http://localhost:8082/orders
-```
-
-20. **View trace in Zipkin**: Click **Run Query** in the UI to see the trace flowing from OrderService to UserService.
+### Step 18: Trigger Trace and View
+- Visit: `http://localhost:8082/orders`
+- In Zipkin UI, click **Run Query**
+- You should see trace from `OrderService → UserService`
 
 ---
 
-### ✅ Optional Exercises
+## **Optional Exercises**
 
-21. Add a third service (e.g., `ProductService`) and trace all 3 hops.
-
-22. Simulate delay or failure in `UserService` and observe it in Zipkin.
-
-23. Export traces to OpenTelemetry (advanced).
+✅ Add a third service (e.g., ProductService) and trace all 3 hops.  
+✅ Simulate a delay or error in UserService and observe in Zipkin.  
+✅ Export traces to OpenTelemetry (advanced).
 
 ---
 
-### ✅ Conclusion
+## ✅ **Conclusion**
+- You now have full distributed tracing setup using **Micrometer Tracing with Brave**
+- Traces appear in logs and visually in **Zipkin UI**
+- This lab replaces older Sleuth-based solutions for Spring Boot 3.x
 
-By following all 23 steps, you now have a full understanding of distributed tracing using Micrometer Tracing + Brave and can visualize trace spans in Zipkin.
+Students should now understand how to implement tracing across microservices for real-world debugging and monitoring.
 
