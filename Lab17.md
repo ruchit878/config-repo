@@ -11,6 +11,7 @@ Learn how to deploy two **Spring Boot 3.4.5** microservices (`UserService` and `
 
 1. **Install Minikube.**
    - Visit [Minikube Installation](https://minikube.sigs.k8s.io/docs/start/) and follow the OS-specific instructions.
+   - Make it available in your `PATH`.
 
 2. **Install Kubectl.**
    - Download **kubectl** from [Kubernetes Tools](https://kubernetes.io/docs/tasks/tools/).
