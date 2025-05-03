@@ -7,7 +7,7 @@
 
 ---
 
-## **Objective**
+## **Objective**
 
 Configure two Spring Boot 3.4.5 microservices (`UserService` and `OrderService`) so that:
 
