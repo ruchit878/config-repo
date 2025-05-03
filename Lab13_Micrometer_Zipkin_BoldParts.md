@@ -17,7 +17,7 @@ Configure two Spring Boot 3.4.5 microservices (`UserService` and `OrderService
 
 ---
 
-## **Lab Steps**
+## **Lab Steps**
 
 ### **Part 1 – Run Zipkin locally**
 
@@ -250,15 +250,14 @@ The timeline view displays latency for each span and the relationship between se
 
 ---
 
-## **Optional**
+## **Optional Exercises**
 
 * Add a third microservice (e.g., `ProductService`) to create a three‑hop trace.  
 * Introduce a random delay in `UserService` and observe it immediately in Zipkin.  
 * Experiment with lower sampling rates by reducing `management.tracing.sampling.probability`.
 
 ---
-
-## **Troubleshooting**
+## **Troubleshooting**
 
 | Symptom | Likely cause | Fix |
 |---------|--------------|-----|
