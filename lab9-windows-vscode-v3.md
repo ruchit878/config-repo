@@ -267,7 +267,7 @@ Learn how to use **Spring Cloud Bus** with **Spring Boot 3.4.5** to propagate c
 ### **Part 4 – Broadcasting Config Changes**
 
 1. **Add property in GitHub web UI**  
-   - Navigate to **https://github.com/enter-your-username-here/config-repo**.  
+   - Navigate to "https://github.com/<enter-your-username-here>/config-repo" .  
    - Click **Add file › Create new file**.  
    - **File name**: `user-service.properties`.  
    - Paste:  
