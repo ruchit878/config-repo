@@ -12,22 +12,14 @@ Everything is done on **Windows 10/11**, using **PowerShell (Administrator)** a
 
 ---
 
-## **GitHub Setup — do this once**
-
-> We need a Git repo that the Config Server can read.
+## GitHub Setup — do this once
+> We need a Git repo that the Config Server can read.
 
 | Step | What to do | Expected Result |
 |------|------------|-----------------|
-| 1 | Sign in to <https://github.com> (or create an account). Grab your **username** from the top‑right avatar; you’ll replace `<your‑username>` below. | — |
-| 2 | Click **➕ New → New repository**.<br>• **Name**: `config-repo`<br>• **☑ Add a README** ✔<br>Click **Create repository**. | Repo page shows *README.md* |
-| 3 | Still on GitHub, click **Add file → Create new file**.<br>• **Filename**: `user-service.properties`<br>• Put only a comment for now:<br>```properties
-# placeholder
-```<br>Scroll down → **Commit new file**. | File appears in the repo |
-| 4 | **Open PowerShell as Administrator** (`Win + X → Windows Terminal (Admin)`). Clone locally:```powershell
-git clone https://github.com/<your-username>/config-repo.git C:\SpringCloud\others\config-repo
-``` | Folder *C:\SpringCloud\others\config-repo* contains README and `user-service.properties` |
-
-If that folder and file already exist, **skip the steps above**.
+| 1 | Sign in to <https://github.com> (or create an account). Grab your **username** from the top-right avatar; you’ll replace `<your-username>` below. | — |
+| 2 | Click **➕ New → New repository**.<br>• **Name**: `config-repo`<br>• **☑ Add a README** ✔<br>Click **Create repository**. | Repo page shows *README.md* |
+| 3 | Still on GitHub, click **Add file → Create new file**.<br>• **Filename**: `user-service.properties`<br>• Put only a comment for now: `# placeholder`<br>Scroll down → **Commit new file**. | File appears in the repo |
 
 ---
 
