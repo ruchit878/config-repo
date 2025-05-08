@@ -23,27 +23,17 @@ Everything is done on **Windows 10/11**, using **PowerShell (Administrator)** a
 
 ---
 
-## **Part 1 – Kafka & ZooKeeper**
+## Part 1 – Kafka & ZooKeeper
+> Kafka relays Spring Cloud Bus events.
 
-> Kafka carries Spring Cloud Bus events.
+| Step | Window | Command (PowerShell) | Expected Output |
+|------|--------|----------------------|-----------------|
+| **A – Prepare** | — | 1. `New-Item -Path C:\kafka -ItemType Directory -Force`<br>2. Unzip **kafka_2.12-3.9.0.zip** to `C:\kafka` | Folder `C:\kafka\kafka_2.12-3.9.0` |
+| **B – Start ZooKeeper** | 1 | <code>cd C:\kafka\kafka_2.12-3.9.0<br>.\bin\windows\zookeeper-server-start.bat ..\config\zookeeper.properties</code> | Last line ends with `…:2181` |
+| **C – Start Kafka Broker** | 2 | <code>cd C:\kafka\kafka_2.12-3.9.0<br>.\bin\windows\kafka-server-start.bat ..\config\server.properties</code> | `[KafkaServer id=0] started` |
+| **D – List Topics** | 3 | <code>cd C:\kafka\kafka_2.12-3.9.0<br>.\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092</code> | Blank list or `__consumer_offsets` |
 
-| Action | Exact Command (run in **PowerShell Admin**) | Expected Output |
-|--------|---------------------------------------------|-----------------|
-| **A. Prepare** | 1. Create folder `C:\kafka`.<br>2. On your Desktop you’ll find **Spring Clouds\kafka_2.12‑3.9.0.zip** → *Right‑click → Extract All…* → choose **`C:\kafka`**. | Folder *C:\kafka\kafka_2.12‑3.9.0* |
-| **B. Start ZooKeeper** *(Window 1)* | ```powershell
-cd C:\kafka
-.\kafka_2.12-3.9.0\bin\windows\zookeeper-server-start.bat ..\..\config\zookeeper.properties
-``` | Last line shows `binding to port 0.0.0.0/0.0.0.0:2181` |
-| **C. Start Kafka Broker** *(Window 2)* | ```powershell
-cd C:\kafka
-.\kafka_2.12-3.9.0\bin\windows\kafka-server-start.bat ..\..\config\server.properties
-``` | Look for `[KafkaServer id=0] started` |
-| **D. List Topics** *(Window 3)* | ```powershell
-cd C:\kafka
-.\kafka_2.12-3.9.0\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
-``` | Either blank or `__consumer_offsets` |
-
-> **Troubleshoot:** If ZooKeeper window shows a session timeout, rerun Step B, then Step C.
+> **Troubleshoot:** If the ZooKeeper window times out, close it and repeat **B**, then **C**.
 
 ---
 
