@@ -52,19 +52,10 @@ Scroll down → **Commit new file**. | File appears in the repo |
 | Step | Window | Command (run in PowerShell **Admin**) | Expected Output |
 |------|--------|----------------------------------------|-----------------|
 | **A – Prepare** | — | 1. Create folder `C:\kafka`.<br>2. Unzip **kafka_2.12-3.9.0.zip** to `C:\kafka`. | Folder **C:\kafka\kafka_2.12-3.9.0** exists |
-| **B – Update ZooKeeper timeout** | — | <pre># Remove any existing timeout line  
-Get-Content 'C:\kafka\kafka_2.12-3.9.0\config\server.properties' \|  
-  Where-Object { $_ -notmatch '^\s*zookeeper.session.timeout.ms=' } \|  
-  Set-Content 'C:\kafka\kafka_2.12-3.9.0\config\server.properties'  
-  
-# Add the new timeout  
-Add-Content 'C:\kafka\kafka_2.12-3.9.0\config\server.properties' "zookeeper.session.timeout.ms=30000"</pre> | Line `zookeeper.session.timeout.ms=30000` is appended to **server.properties** |
-| **C – Start ZooKeeper** | 1 | <pre>cd C:\kafka\kafka_2.12-3.9.0  
-.\bin\windows\zookeeper-server-start.bat ..\config\zookeeper.properties</pre> | Last line ends with<br>`binding to port 0.0.0.0:2181` |
-| **D – Start Kafka Broker** | 2 | <pre>cd C:\kafka\kafka_2.12-3.9.0  
-.\bin\windows\kafka-server-start.bat ..\config\server.properties</pre> | Line shows<br>`[KafkaServer id=0] started` |
-| **E – List Topics** | 3 | <pre>cd C:\kafka\kafka_2.12-3.9.0  
-.\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092</pre> | Blank list **or**<br>`__consumer_offsets` |
+| **B – Update ZooKeeper timeout** | — | <code>Get-Content 'C:\kafka\kafka_2.12-3.9.0\config\server.properties' &#124; Where-Object { $_ -notmatch '^\s*zookeeper.session.timeout.ms=' } &#124; Set-Content 'C:\kafka\kafka_2.12-3.9.0\config\server.properties'</code><br><br><code>Add-Content 'C:\kafka\kafka_2.12-3.9.0\config\server.properties' "zookeeper.session.timeout.ms=30000"</code> | Line `zookeeper.session.timeout.ms=30000` is appended to **server.properties** |
+| **C – Start ZooKeeper** | 1 | <code>cd C:\kafka\kafka_2.12-3.9.0</code><br><code>.\bin\windows\zookeeper-server-start.bat ..\config\zookeeper.properties</code> | Last line ends with `binding to port 0.0.0.0:2181` |
+| **D – Start Kafka Broker** | 2 | <code>cd C:\kafka\kafka_2.12-3.9.0</code><br><code>.\bin\windows\kafka-server-start.bat ..\config\server.properties</code> | Line shows `[KafkaServer id=0] started` |
+| **E – List Topics** | 3 | <code>cd C:\kafka\kafka_2.12-3.9.0</code><br><code>.\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092</code> | Blank list **or** `__consumer_offsets` |
 
 > **Troubleshoot:** If the ZooKeeper window times out, close it and repeat **C**, then **D**.
 
