@@ -31,7 +31,7 @@ Configure **Spring Cloud Gateway** to route requests, add custom filters, and mo
 
 | Setting | Value |
 |---------|-------|
-| **Folder** | `~/labs/api-gateway` |
+| **Folder** | `C:\Projects\Lab11\api-gateway` |
 | **Spring Initializr** | <https://start.spring.io> |
 | **Group / Artifact / Name** | `com.microservices` / `api-gateway` / `api-gateway` |
 | **Dependencies** | **Spring Cloud Gateway**, **Spring Boot Actuator** |
@@ -114,7 +114,7 @@ List of products from ProductService
 
 | Setting | Value |
 |---------|-------|
-| **Folder** | `~/labs/user-service` |
+| **Folder** | `C:\Projects\Lab11\user-service` |
 | **Spring Initializr** | <https://start.spring.io> |
 | **Group / Artifact / Name** | `com.microservices` / `user-service` / `user-service` |
 | **Dependencies** | **Spring Web**<br>(Optional) **Spring Boot Actuator** |
@@ -150,7 +150,7 @@ public class UserController {
 
 | Setting | Value |
 |---------|-------|
-| **Folder** | `~/labs/product-service` |
+| **Folder** | `C:\Projects\Lab11\product-service` |
 | **Spring Initializr** | <https://start.spring.io> |
 | **Group / Artifact / Name** | `com.microservices` / `product-service` / `product-service` |
 | **Dependencies** | **Spring Web**<br>(Optional) **Spring Boot Actuator** |
