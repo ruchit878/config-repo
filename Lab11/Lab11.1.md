@@ -7,11 +7,11 @@
 
 | Tool | One‑line install (Windows → winget · macOS → brew · Ubuntu → apt) | Purpose in this lab |
 |------|-------------------------------------------------------------------|---------------------|
-| **Java 17 JDK** | `winget install --id=EclipseAdoptium.Temurin.17.JDK`<br>`brew install openjdk@17`<br>`sudo apt-get install openjdk-17-jdk` | Runs all Spring Boot apps |
-| **Maven 3.9+** | `winget install Apache.Maven`<br>`brew install maven`<br>`sudo apt-get install maven` | Builds & runs projects (use **mvnw** if generated) |
-| **Git** | `winget install Git.Git`<br>`brew install git`<br>`sudo apt-get install git` | Optional version control |
+| **Java 17 JDK** | `winget install --id=EclipseAdoptium.Temurin.17.JDK`| Runs all Spring Boot apps |
+| **Maven 3.9+** | `winget install Apache.Maven`| Builds & runs projects (use **mvnw** if generated) |
+| **Git** | `winget install Git.Git`| Optional version control |
 | **IDE** | IntelliJ IDEA Community or VS Code (Java Extension Pack) | Edit and run code |
-| **curl / Postman** | Pre‑installed on macOS/Linux · `winget install curl` | Test HTTP endpoints |
+| **curl / Postman** |`winget install curl` | Test HTTP endpoints |
 
 > **Troubleshooting – `JAVA_HOME` not found?**  
 > Re‑open the terminal or `echo %JAVA_HOME%` / `echo $JAVA_HOME` to confirm. Add it if missing.
@@ -40,7 +40,6 @@ Configure **Spring Cloud Gateway** to route requests, add custom filters, and mo
 
 #### 2. Import into IDE  
 *IntelliJ*: **File → Open…** select the folder.  
-*VS Code*: **File → Open Folder…**, then run `Ctrl+Shift+P › Java: Import Maven Projects`.
 
 > **No manual POM edits needed!** Both dependencies come pre‑configured, and `spring-boot-starter-webflux` plus `spring-boot-starter-test` are added transitively.
 
@@ -88,14 +87,14 @@ management.endpoints.web.exposure.include=routes,filters
 *IDE*: right‑click `ApiGatewayApplication` → **Run**.  
 *CLI*:
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 Expected:
 ```text
 ...Started ApiGatewayApplication...
 ```
 
-#### 6. Smoke‑test routing  
+#### 6. Smoke‑test routing (run Powershell as administrator)
 ```bash
 curl "http://localhost:8080/users?username=admin"
 curl "http://localhost:8080/products"
@@ -117,7 +116,7 @@ List of products from ProductService
 | **Folder** | `C:\Projects\Lab11\user-service` |
 | **Spring Initializr** | <https://start.spring.io> |
 | **Group / Artifact / Name** | `com.microservices` / `user-service` / `user-service` |
-| **Dependencies** | **Spring Web**<br>(Optional) **Spring Boot Actuator** |
+| **Dependencies** | **Spring Web**<br> **Spring Boot Actuator** |
 
 #### 8. Set port & controller  
 `src/main/resources/application.properties`
@@ -139,7 +138,7 @@ public class UserController {
 
 #### 9. Run UserService  
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ---
@@ -153,7 +152,7 @@ public class UserController {
 | **Folder** | `C:\Projects\Lab11\product-service` |
 | **Spring Initializr** | <https://start.spring.io> |
 | **Group / Artifact / Name** | `com.microservices` / `product-service` / `product-service` |
-| **Dependencies** | **Spring Web**<br>(Optional) **Spring Boot Actuator** |
+| **Dependencies** | **Spring Web**<br> **Spring Boot Actuator** |
 
 #### 11. Set port & controller  
 `src/main/resources/application.properties`
@@ -173,7 +172,7 @@ public class ProductController {
 
 #### 12. Run ProductService  
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ---
@@ -196,7 +195,7 @@ public class LoggingFilter implements GlobalFilter {
 ```
 Restart gateway and hit `/users`; observe logs.
 
-14. **Optional custom response filter**  
+14. ** Custom response filter**  
 `api-gateway/src/main/java/.../CustomResponseFilter.java`
 ```java
 @Component
@@ -224,23 +223,13 @@ Refer to it in the `product-service` route **or** keep `AddResponseHeader`.
 
 ---
 
-### Part 6: Monitoring with Actuator
+### Part 6: Monitoring with Actuator (run Powershell as administrator)
 
 ```bash
 curl "http://localhost:8080/actuator/routes"
 curl "http://localhost:8080/actuator/filters"
 ```
 You should see JSON for each route and filter.
-
----
-
-### Part 7: Optional Exercises
-
-| Exercise | Hint |
-|----------|------|
-| **Rate‑limiting** | Enable `RequestRateLimiter` filter (Redis or in‑memory). |
-| **Circuit Breaker** | Add **Resilience4j** dependency and `CircuitBreaker` filter. |
-| **Load Balancer** | Use **Spring Cloud LoadBalancer** or Eureka + `lb://` URIs. |
 
 ---
 
