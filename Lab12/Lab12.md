@@ -33,9 +33,34 @@ curl ─▶ OrderService (8082) ─┬─▶ UserService (8081)
 | Spring Boot | `3.4.5` |
 | Packaging | JAR (default) |
 | Java | 17 |
-| **Dependencies (add on start.spring.io)** | *Spring Web*, *Spring Boot Actuator*, *Micrometer Tracing Brave*, *Zipkin Reporter Brave* |
+| **Dependencies (add on start.spring.io)** | *Spring Web*, *Spring Boot Actuator* |
 
 > Download the generated ZIP and extract to `C:\Projects\Lab12\user-service`.
+
+> 🔧 **After importing**, manually add the following dependencies to your `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>io.micrometer</groupId>
+  <artifactId>micrometer-tracing-bridge-brave</artifactId>
+</dependency>
+<dependency>
+  <groupId>io.zipkin.reporter2</groupId>
+  <artifactId>zipkin-reporter-brave</artifactId>
+</dependency>
+
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-dependencies</artifactId>
+      <version>2023.0.2</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+```
 
 1. **Import into IDE**  
    *IntelliJ*: **File → Open →** `user-service`  
@@ -102,14 +127,39 @@ List of users from UserService
 | Spring Boot | `3.4.5` |
 | Packaging | JAR (default) |
 | Java | 17 |
-| **Dependencies (add on start.spring.io)** | *Spring Web*, *Spring Reactive Web*, *Spring Boot Actuator*, *Micrometer Tracing Brave*, *Zipkin Reporter Brave* |
+| **Dependencies (add on start.spring.io)** | *Spring Web*, *Spring Reactive Web*, *Spring Boot Actuator* |
 
 > Extract ZIP to `C:\Projects\Lab12\order-service` and open in your IDE.
 
+> 🔧 **After importing**, manually add the following dependencies to your `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>io.micrometer</groupId>
+  <artifactId>micrometer-tracing-bridge-brave</artifactId>
+</dependency>
+<dependency>
+  <groupId>io.zipkin.reporter2</groupId>
+  <artifactId>zipkin-reporter-brave</artifactId>
+</dependency>
+
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-dependencies</artifactId>
+      <version>2023.0.2</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+```
+
 1. **Import into IDE**  
-   *IntelliJ*: **File → Open →** `user-service`  
-   
-3. **Create controller** – `src/main/java/com/microservices/orderservice/OrderController.java`
+   *IntelliJ*: **File → Open →** `order-service`  
+
+2. **Create controller** – `src/main/java/com/microservices/orderservice/OrderController.java`
 ```java
 package com.microservices.orderservice;
 
@@ -134,7 +184,7 @@ public class OrderController {
 }
 ```
 
-2. **Register WebClient bean** – `OrderServiceApplication.java`
+3. **Register WebClient bean** – `OrderServiceApplication.java`
 ```java
 @Bean
 public WebClient.Builder webClientBuilder() {
@@ -142,7 +192,7 @@ public WebClient.Builder webClientBuilder() {
 }
 ```
 
-3. **Configure tracing** – `src/main/resources/application.properties`
+4. **Configure tracing** – `src/main/resources/application.properties`
 ```properties
 server.port=8082
 spring.application.name=order-service
@@ -155,13 +205,13 @@ management.endpoints.web.exposure.include=*
 logging.pattern.level=%5p [${spring.application.name},traceId=%X{traceId},spanId=%X{spanId}]
 ```
 
-4. **Run service**
+5. **Run service**
 ```bash
 cd order-service
 ./mvnw spring-boot:run
 ```
 
-5. **End‑to‑end test** (run Powershell as administrator)
+6. **End‑to‑end test** (run Powershell as administrator)
 ```bash
 curl http://localhost:8082/orders
 ```
@@ -169,7 +219,6 @@ curl http://localhost:8082/orders
 ```text
 Orders from OrderService and Users: List of users from UserService
 ```
-Logs in both apps share the **same** 128‑bit `traceId`.
 
 ---
 
@@ -186,4 +235,4 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 ---
 
 ## Conclusion 🎉
-With zero manual POM edits and **table‑driven project setup**, you now run **128‑bit distributed tracing** on Spring Boot 3.4.5—viewable in logs, Zipkin, and optional Actuator endpoints.
+You now have **128‑bit distributed tracing** with Spring Boot 3.4.5 using **Micrometer + Zipkin**, with logs and UI verification. Just remember to manually add the required tracing dependencies after generation.
