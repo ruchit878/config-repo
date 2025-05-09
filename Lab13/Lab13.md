@@ -209,16 +209,6 @@ public class OrderController {
 
 ---
 
-## **Optional Exercises**
-
-| Idea | What to try |
-|------|-------------|
-| Third service | Add `ProductService` on port 8083, chain calls → observe three-hop trace |
-| Latency test | Add `Thread.sleep(...)` in `UserController` → Zipkin highlights delay |
-| Lower sampling | Set `management.tracing.sampling.probability=0.2` → fewer traces stored |
-
----
-
 ## **Troubleshooting Quick-ref**
 
 | Symptom | Cause | Fix |
