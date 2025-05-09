@@ -190,7 +190,7 @@ management.endpoints.web.exposure.include=health,info,refresh
 Create file **`src/main/java/com/microservices/userservice/ConfigController.java`**:
 
 ```java
-package com.microservices.userservice;
+package com.microservices.user_service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
