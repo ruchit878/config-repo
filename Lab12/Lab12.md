@@ -18,7 +18,6 @@
 ## Quick‑Start Topology
 ```
 curl ─▶ OrderService (8082) ─┬─▶ UserService (8081)
-                              └─▶ ProductService (8082)
                               └─▶ Zipkin (9411 docker)
 ```
 
