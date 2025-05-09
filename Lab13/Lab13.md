@@ -10,11 +10,11 @@
 
 | Tool | One-line install (Windows ▶ macOS ▶ Ubuntu) | Purpose |
 |------|---------------------------------------------|---------|
-| **Java 17 +** | `winget install --id EclipseAdoptium.Temurin.17.JDK` <br>`brew install openjdk@17` <br>`sudo apt-get install openjdk-17-jdk -y` | Run Spring Boot apps |
-| **Maven 3.9 +** | `winget install Apache.Maven` <br>`brew install maven` <br>`sudo apt-get install maven -y` | Build / run projects (`mvnw` wrapper works too) |
-| **Docker Desktop** | `winget install Docker.DockerDesktop` <br>Download DMG <br>`sudo apt-get install docker.io -y` | Fastest way to launch Zipkin |
-| **curl** | pre-installed <br>`brew install curl` <br>`sudo apt-get install curl -y` | Trigger HTTP calls |
-| **IDE (IntelliJ Community / VS Code)** | `winget install JetBrains.IntelliJIDEA.Community` <br>Download DMG | Code editing & run |
+| **Java 17 +** | `winget install --id EclipseAdoptium.Temurin.17.JDK`| Run Spring Boot apps |
+| **Maven 3.9 +** | `winget install Apache.Maven`| Build / run projects (`mvnw` wrapper works too) |
+| **Docker Desktop** | `winget install Docker.DockerDesktop` | Fastest way to launch Zipkin |
+| **curl** | pre-installed | Trigger HTTP calls |
+| **IDE (IntelliJ Community / VS Code)** | `winget install JetBrains.IntelliJIDEA.Community`| Code editing & run |
 
 > **If `java -version` fails:** install JDK 17 using a command above or from <https://adoptium.net/>.
 
@@ -83,6 +83,31 @@ Configure two Spring Boot 3.4.5 microservices (`UserService` and `OrderService`)
 | **5** | **Run service** | `mvn spring-boot:run` or IDE **Run** |
 | **6** | **Smoke-test** | `curl http://localhost:8081/users` |
 
+> 🔧 **After importing**, manually add the following dependencies to your `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>io.micrometer</groupId>
+  <artifactId>micrometer-tracing-bridge-brave</artifactId>
+</dependency>
+<dependency>
+  <groupId>io.zipkin.reporter2</groupId>
+  <artifactId>zipkin-reporter-brave</artifactId>
+</dependency>
+
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-dependencies</artifactId>
+      <version>2023.0.2</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+```
+
 **application.properties**
 
 ```properties
@@ -128,6 +153,31 @@ public class UserController {
 | **5** | **Add controller** | `/orders` endpoint calls `UserService` |
 | **6** | **Run service** | `mvn spring-boot:run` |
 | **7** | **Smoke-test** | `curl http://localhost:8082/orders` |
+
+> 🔧 **After importing**, manually add the following dependencies to your `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>io.micrometer</groupId>
+  <artifactId>micrometer-tracing-bridge-brave</artifactId>
+</dependency>
+<dependency>
+  <groupId>io.zipkin.reporter2</groupId>
+  <artifactId>zipkin-reporter-brave</artifactId>
+</dependency>
+
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-dependencies</artifactId>
+      <version>2023.0.2</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+```
 
 **application.properties**
 
