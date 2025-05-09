@@ -7,11 +7,11 @@
 
 | Tool | One‑line install (Windows → winget · macOS → brew · Ubuntu → apt) | Purpose in this lab |
 |------|-------------------------------------------------------------------|---------------------|
-| **Java 17 JDK** | `winget install --id=EclipseAdoptium.Temurin.17.JDK`| Runs all Spring Boot apps |
-| **Maven 3.9+** | `winget install Apache.Maven`| Builds & runs projects (use **mvnw** if generated) |
-| **Git** | `winget install Git.Git`| Optional version control |
+| **Java 17 JDK** | `winget install --id=EclipseAdoptium.Temurin.17.JDK` | Runs all Spring Boot apps |
+| **Maven 3.9+** | `winget install Apache.Maven` | Builds & runs projects (use **mvnw** if generated) |
+| **Git** | `winget install Git.Git` | Optional version control |
 | **IDE** | IntelliJ IDEA Community or VS Code (Java Extension Pack) | Edit and run code |
-| **curl / Postman** |`winget install curl` | Test HTTP endpoints |
+| **curl / Postman** | `winget install curl` | Test HTTP endpoints |
 
 > **Troubleshooting – `JAVA_HOME` not found?**  
 > Re‑open the terminal or `echo %JAVA_HOME%` / `echo $JAVA_HOME` to confirm. Add it if missing.
@@ -94,9 +94,11 @@ Expected:
 ...Started ApiGatewayApplication...
 ```
 
-#### 6. Smoke‑test routing (run Powershell as administrator)
+#### 6. Smoke‑test routing (run PowerShell as Administrator)  
 ```bash
+# Call the user route with required query parameter
 curl "http://localhost:8080/users?username=admin"
+# Call the product route
 curl "http://localhost:8080/products"
 ```
 Expected:
@@ -116,7 +118,7 @@ List of products from ProductService
 | **Folder** | `C:\Projects\Lab11\user-service` |
 | **Spring Initializr** | <https://start.spring.io> |
 | **Group / Artifact / Name** | `com.microservices` / `user-service` / `user-service` |
-| **Dependencies** | **Spring Web**<br> **Spring Boot Actuator** |
+| **Dependencies** | **Spring Web**, **Spring Boot Actuator** |
 
 #### 8. Set port & controller  
 `src/main/resources/application.properties`
@@ -152,7 +154,7 @@ mvn spring-boot:run
 | **Folder** | `C:\Projects\Lab11\product-service` |
 | **Spring Initializr** | <https://start.spring.io> |
 | **Group / Artifact / Name** | `com.microservices` / `product-service` / `product-service` |
-| **Dependencies** | **Spring Web**<br> **Spring Boot Actuator** |
+| **Dependencies** | **Spring Web**, **Spring Boot Actuator** |
 
 #### 11. Set port & controller  
 `src/main/resources/application.properties`
@@ -193,9 +195,13 @@ public class LoggingFilter implements GlobalFilter {
     }
 }
 ```
-Restart gateway and hit `/users`; observe logs.
+Restart the gateway, then run:
+```bash
+curl "http://localhost:8080/users?username=test"
+```
+You should see two log lines (`Incoming:` and `Outgoing:`) in the gateway console.
 
-14. ** Custom response filter**  
+14. **Custom response filter**  
 `api-gateway/src/main/java/.../CustomResponseFilter.java`
 ```java
 @Component
@@ -212,7 +218,10 @@ public class CustomResponseFilter
 ```
 Refer to it in the `product-service` route **or** keep `AddResponseHeader`.
 
-15. Call `/products` and check header via `curl -I`.
+15. Call `/products` and check header via:
+```bash
+curl -I "http://localhost:8080/products"
+```
 
 ---
 
@@ -223,7 +232,7 @@ Refer to it in the `product-service` route **or** keep `AddResponseHeader`.
 
 ---
 
-### Part 6: Monitoring with Actuator (run Powershell as administrator)
+### Part 6: Monitoring with Actuator (run PowerShell as Administrator)
 
 ```bash
 curl "http://localhost:8080/actuator/routes"
