@@ -5,8 +5,8 @@
 ## Installing Prerequisites 🚀
 | Tool | One‑line install | Purpose |
 |------|-----------------|---------|
-| **Java 17 +** | `winget install --silent EclipseAdoptium.Temurin.17.JDK`  \|  `brew install temurin17`  \|  `sudo apt‑get install temurin-17-jdk` | Runs Spring Boot 3.4.5 |
-| **Maven 3.9 +** | `winget install Apache.Maven`  \|  `brew install maven`  \|  `sudo apt‑get install maven` | Builds & runs projects |
+| **Java 17 +** | `winget install --silent EclipseAdoptium.Temurin.17.JDK` | Runs Spring Boot 3.4.5 |
+| **Maven 3.9 +** | `winget install Apache.Maven` | Builds & runs projects |
 | **Docker Desktop** | <https://www.docker.com/products/docker-desktop/> | Hosts Zipkin container |
 | **IDE (IntelliJ / VS Code)** | Download from vendor | Edit & run code |
 
@@ -39,7 +39,6 @@ curl ─▶ OrderService (8082) ─┬─▶ UserService (8081)
 
 1. **Import into IDE**  
    *IntelliJ*: **File → Open →** `user-service`  
-   *VS Code*: **File → Open Folder… →** `user-service`
 
 2. **Create REST controller** – `src/main/java/com/microservices/userservice/UserController.java`
 ```java
@@ -82,7 +81,7 @@ cd user-service
 INFO  [user-service,traceId=...,spanId=...]
 ```
 
-5. **Verify endpoint**
+5. **Verify endpoint** (run Powershell as administrator)
 ```bash
 curl http://localhost:8081/users
 ```
@@ -109,7 +108,6 @@ List of users from UserService
 
 1. **Import into IDE**  
    *IntelliJ*: **File → Open →** `user-service`  
-   *VS Code*: **File → Open Folder… →** `user-service`
    
 3. **Create controller** – `src/main/java/com/microservices/orderservice/OrderController.java`
 ```java
@@ -163,7 +161,7 @@ cd order-service
 ./mvnw spring-boot:run
 ```
 
-5. **End‑to‑end test**
+5. **End‑to‑end test** (run Powershell as administrator)
 ```bash
 curl http://localhost:8082/orders
 ```
@@ -175,7 +173,7 @@ Logs in both apps share the **same** 128‑bit `traceId`.
 
 ---
 
-## Part 3 – Zipkin UI
+## Part 3 – Zipkin UI (run Powershell as administrator)
 
 1. **Start Zipkin**
 ```bash
@@ -184,15 +182,6 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 
 2. **Open** <http://localhost:9411> → click **Run Query** after calling `/orders` again.  
    You’ll see **order-service → user-service** trace.
-
----
-
-## Optional (Actuator & Jaeger)
-
-| Feature | How to enable | Where to view |
-|---------|---------------|---------------|
-| **HTTP Exchanges** | Add to both apps:<br>`management.endpoint.httpexchanges.enabled=true`<br>`management.endpoints.web.exposure.include=httpexchanges,health` | `http://localhost:8082/actuator/httpexchanges` |
-| **Jaeger Export** | Add dep:<br>`io.opentelemetry:opentelemetry-exporter-jaeger`<br>Set:<br>`management.otlp.tracing.endpoint=http://localhost:4318/v1/traces` | Jaeger UI on port **16686** |
 
 ---
 
