@@ -41,7 +41,7 @@ Configure two Spring Boot 3.4.5 microservices (`UserService` and `OrderService`)
 
 ## **Lab Steps**
 
-### **Part 1 – Run Zipkin locally**
+### **Part 1 – Run Zipkin locally (run on Powershell as Administrator)**
 
 1. **Verify Java 17 +**
 
@@ -80,7 +80,7 @@ Configure two Spring Boot 3.4.5 microservices (`UserService` and `OrderService`)
 | **2** | **Unzip & import into IDE** | IntelliJ → *File ▸ Open…* → select folder |
 | **3** | **Configure tracing** | `src/main/resources/application.properties` → see below |
 | **4** | **Add controller** | Simple `/users` endpoint |
-| **5** | **Run service** | `./mvnw spring-boot:run` or IDE **Run** |
+| **5** | **Run service** | `mvn spring-boot:run` or IDE **Run** |
 | **6** | **Smoke-test** | `curl http://localhost:8081/users` |
 
 **application.properties**
@@ -99,7 +99,7 @@ logging.pattern.level=%5p [${spring.application.name},traceId=%X{traceId},spanId
 **UserController.java**
 
 ```java
-package com.microservices.userservice;
+package com.microservices.user_service;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -126,7 +126,7 @@ public class UserController {
 | **3** | **Configure tracing** | `src/main/resources/application.properties` below |
 | **4** | **Add WebClient bean** | see code snippet |
 | **5** | **Add controller** | `/orders` endpoint calls `UserService` |
-| **6** | **Run service** | `./mvnw spring-boot:run` |
+| **6** | **Run service** | `mvn spring-boot:run` |
 | **7** | **Smoke-test** | `curl http://localhost:8082/orders` |
 
 **application.properties**
@@ -144,7 +144,7 @@ logging.pattern.level=%5p [${spring.application.name},traceId=%X{traceId},spanId
 **OrderServiceApplication.java**
 
 ```java
-package com.microservices.orderservice;
+package com.microservices.order_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -168,7 +168,7 @@ public class OrderServiceApplication {
 **OrderController.java**
 
 ```java
-package com.microservices.orderservice;
+package com.microservices.order_service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -197,7 +197,7 @@ public class OrderController {
 
 ---
 
-### **Part 4 – Visualise traces in Zipkin**
+### **Part 4 – Visualise traces in Zipkin (run on Powershell as Administrator)**
 
 1. **Generate traffic**
 
@@ -206,6 +206,8 @@ public class OrderController {
    ```
 
 2. **Open Zipkin** → click **Find Traces** → expect spans for `order-service` and `user-service`.
+
+   It is reached by running http://localhost:9411
 
 ---
 
