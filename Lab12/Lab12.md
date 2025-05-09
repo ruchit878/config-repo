@@ -37,6 +37,9 @@ curl ─▶ OrderService (8082) ─┬─▶ UserService (8081)
 
 > Download the generated ZIP and extract to `C:\Projects\Lab12\user-service`.
 
+1. **Import into IDE**  
+   *IntelliJ*: **File → Open →** `user-service`  
+
 > 🔧 **After importing**, manually add the following dependencies to your `pom.xml`:
 
 ```xml
@@ -62,12 +65,9 @@ curl ─▶ OrderService (8082) ─┬─▶ UserService (8081)
 </dependencyManagement>
 ```
 
-1. **Import into IDE**  
-   *IntelliJ*: **File → Open →** `user-service`  
-
 2. **Create REST controller** – `src/main/java/com/microservices/userservice/UserController.java`
 ```java
-package com.microservices.userservice;
+package com.microservices.user_service;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -98,7 +98,7 @@ logging.pattern.level=%5p [${spring.application.name},traceId=%X{traceId},spanId
 4. **Run service**
 ```bash
 cd user-service
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 **Expected**
 ```text
@@ -114,7 +114,6 @@ curl http://localhost:8081/users
 ```text
 List of users from UserService
 ```
-
 ---
 
 ## Part 2 – Create **OrderService**
@@ -130,6 +129,9 @@ List of users from UserService
 | **Dependencies (add on start.spring.io)** | *Spring Web*, *Spring Reactive Web*, *Spring Boot Actuator* |
 
 > Extract ZIP to `C:\Projects\Lab12\order-service` and open in your IDE.
+
+1. **Import into IDE**  
+   *IntelliJ*: **File → Open →** `order-service`  
 
 > 🔧 **After importing**, manually add the following dependencies to your `pom.xml`:
 
@@ -156,12 +158,9 @@ List of users from UserService
 </dependencyManagement>
 ```
 
-1. **Import into IDE**  
-   *IntelliJ*: **File → Open →** `order-service`  
-
 2. **Create controller** – `src/main/java/com/microservices/orderservice/OrderController.java`
 ```java
-package com.microservices.orderservice;
+package com.microservices.order_service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -208,7 +207,7 @@ logging.pattern.level=%5p [${spring.application.name},traceId=%X{traceId},spanId
 5. **Run service**
 ```bash
 cd order-service
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 6. **End‑to‑end test** (run Powershell as administrator)
@@ -219,7 +218,6 @@ curl http://localhost:8082/orders
 ```text
 Orders from OrderService and Users: List of users from UserService
 ```
-
 ---
 
 ## Part 3 – Zipkin UI (run Powershell as administrator)
@@ -231,7 +229,6 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 
 2. **Open** <http://localhost:9411> → click **Run Query** after calling `/orders` again.  
    You’ll see **order-service → user-service** trace.
-
 ---
 
 ## Conclusion 🎉
