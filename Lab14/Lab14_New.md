@@ -92,6 +92,7 @@ Learn how to install and configure **Jenkins** to automate the build, testing, a
 
 12. **Set up the Git repository in Jenkins.**
     - Under **Source Code Management**, select **Git**.
+    - Under **Branch Specifier**, Enter exactly ***/main**
     - Enter the GitHub repository URL for `UserService`.
 
 13. **Add a Maven build step.**
@@ -163,19 +164,7 @@ pipeline {
 
 ### **Part 5: Deployment (Optional)**
 
-20. **Add a deployment stage.**
-```groovy
-stage('Deploy to Server') {
-    steps {
-        script {
-            bat 'scp user-service\target\*.jar user@server:/path/to/deploy/'
-            bat 'scp order-service\target\*.jar user@server:/path/to/deploy/'
-        }
-    }
-}
-```
-
-21. **Configure webhook triggers.**
+20. **Configure webhook triggers.**
     - In your GitHub repository → **Settings** → **Webhooks** → Add URL to Jenkins webhook endpoint.
 
 ---
