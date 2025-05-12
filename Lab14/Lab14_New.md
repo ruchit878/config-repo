@@ -132,7 +132,7 @@ pipeline {
         stage('Build UserService') {
             steps {
                 script {
-                    git url: '<UserService Git URL>'
+                    git branch:'main', url: '<UserService Git URL>'
                     dir('user-service') {
                         bat 'mvn clean install'
                     }
@@ -142,7 +142,7 @@ pipeline {
         stage('Build OrderService') {
             steps {
                 script {
-                    git url: '<OrderService Git URL>'
+                    git branch:'main', url: '<OrderService Git URL>'
                     dir('order-service') {
                         bat 'mvn clean install'
                     }
@@ -151,6 +151,7 @@ pipeline {
         }
     }
 }
+
 ```
 
 19. **Run the pipeline.**
