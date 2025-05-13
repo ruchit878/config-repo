@@ -24,10 +24,10 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 
 ## **Lab Steps**
 
-### **Part 1: Installing and Running Kafka**
+### **Part 1: Installing and Running Kafka (Windows)**
 
 1. **Install Java.**
-   ```bash
+   ```cmd
    java -version
    ```
    > Expected Output:
@@ -39,31 +39,29 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
    - Visit [Kafka Downloads](https://kafka.apache.org/downloads) and get the latest binary (`.tgz`).
 
 3. **Extract Kafka.**
-   ```bash
-   tar -xvzf kafka_2.13-3.4.0.tgz -C /opt/kafka
-   ```
+   - Use a tool like 7-Zip or WinRAR to extract the `.tgz` and `.tar` files into `C:\kafka`.
 
 4. **Start Zookeeper.**
-   ```bash
-   cd /opt/kafka
-   ./bin/zookeeper-server-start.sh config/zookeeper.properties
+   ```cmd
+   cd C:\kafka\kafka_2.13-3.4.0
+   .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
    ```
    > If Zookeeper fails to start, ensure no other process is using port **2181**.
 
 5. **Start Kafka broker.**
-   ```bash
-   ./bin/kafka-server-start.sh config/server.properties
+   ```cmd
+   .\bin\windows\kafka-server-start.bat .\config\server.properties
    ```
    > Expected Output: Logs showing Kafka server started and listening on port **9092**.
 
 6. **Create a Kafka topic.**
-   ```bash
-   ./bin/kafka-topics.sh --create --topic order-events --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+   ```cmd
+   .\bin\windows\kafka-topics.bat --create --topic order-events --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
    ```
 
 7. **Verify the topic creation.**
-   ```bash
-   ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+   ```cmd
+   .\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
    ```
    > Expected Output:
    ```
@@ -90,7 +88,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
    - Open folder in IntelliJ IDEA or VS Code.
 
 10. **Configure Kafka connection.**  
-    File: `src/main/resources/application.properties`
+    File: `src\main\resources\application.properties`
     ```properties
     spring.application.name=order-service
     spring.cloud.stream.kafka.binder.brokers=localhost:9092
@@ -98,7 +96,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
     ```
 
 11. **Create OrderEvent model.**  
-    File: `src/main/java/com/microservices/orderservice/OrderEvent.java`
+    File: `src\main\java\com\microservices\orderservice\OrderEvent.java`
     ```java
     public class OrderEvent {
         private String orderId;
@@ -108,7 +106,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
     ```
 
 12. **Create OrderProducer.**  
-    File: `src/main/java/com/microservices/orderservice/OrderProducer.java`
+    File: `src\main\java\com\microservices\orderservice\OrderProducer.java`
     ```java
     @Component
     public class OrderProducer {
@@ -123,7 +121,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
     ```
 
 13. **Add REST Controller.**  
-    File: `src/main/java/com/microservices/orderservice/OrderController.java`
+    File: `src\main\java\com\microservices\orderservice\OrderController.java`
     ```java
     @RestController
     public class OrderController {
@@ -140,14 +138,14 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
     ```
 
 14. **Run OrderService.**
-    ```bash
-    ./mvnw spring-boot:run
+    ```cmd
+    mvnw spring-boot:run
     ```
-    > If using IntelliJ, right-click the main class and choose **Run**.
+    > Or right-click the main class in IntelliJ and click **Run**.
 
 15. **Test Event Publishing.**
-    ```bash
-    curl -X POST -H "Content-Type: application/json" -d '{"orderId":"123","status":"CREATED"}' http://localhost:8080/orders
+    ```cmd
+    curl -X POST -H "Content-Type: application/json" -d "{\"orderId\":\"123\",\"status\":\"CREATED\"}" http://localhost:8080/orders
     ```
     > Expected Output in Console:
     ```
@@ -170,7 +168,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
    - Open in IntelliJ or VS Code.
 
 18. **Configure Kafka connection.**  
-    File: `src/main/resources/application.properties`
+    File: `src\main\resources\application.properties`
     ```properties
     spring.application.name=notification-service
     spring.cloud.stream.kafka.binder.brokers=localhost:9092
@@ -178,7 +176,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
     ```
 
 19. **Create Event Consumer.**  
-    File: `src/main/java/com/microservices/notificationservice/OrderEventConsumer.java`
+    File: `src\main\java\com\microservices\notificationservice\OrderEventConsumer.java`
     ```java
     @Component
     public class OrderEventConsumer {
@@ -190,7 +188,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
     ```
 
 20. **Create Event Model.**  
-    File: `src/main/java/com/microservices/notificationservice/OrderEvent.java`
+    File: `src\main\java\com\microservices\notificationservice\OrderEvent.java`
     ```java
     public class OrderEvent {
         private String orderId;
@@ -200,14 +198,14 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
     ```
 
 21. **Run NotificationService.**
-    ```bash
-    ./mvnw spring-boot:run
+    ```cmd
+    mvnw spring-boot:run
     ```
-    > If using IntelliJ, right-click the main class and run.
+    > Or run via IntelliJ: right-click the main class > **Run**.
 
 22. **Verify Event Reception.**
-    ```bash
-    curl -X POST -H "Content-Type: application/json" -d '{"orderId":"456","status":"CREATED"}' http://localhost:8080/orders
+    ```cmd
+    curl -X POST -H "Content-Type: application/json" -d "{\"orderId\":\"456\",\"status\":\"CREATED\"}" http://localhost:8080/orders
     ```
     > Expected Output in NotificationService Console:
     ```
@@ -226,7 +224,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 
 ## **Conclusion 🎉**
 You now:
-- Installed and ran Kafka.
+- Installed and ran Kafka on Windows.
 - Built a producer that sends events.
 - Built a consumer that reacts to those events.
 - Tested end-to-end event-driven messaging with Spring Cloud Stream.
