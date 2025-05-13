@@ -78,7 +78,6 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
      - Artifact: `order-service`
      - Dependencies:
        - Spring Web
-       - Spring Boot DevTools (optional)
        - Spring Cloud Stream Kafka
 
    > ⚠️ **Note:** If `Spring Cloud Stream Kafka` is not available via UI, add this manually in `pom.xml`:
@@ -104,7 +103,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 11. **Create OrderEvent model.**  
     File: `src\main\java\com\microservices\orderservice\OrderEvent.java`
     ```java
-    package com.microservices.orderservice;
+    package com.microservices.order_service;
 
     public class OrderEvent {
         private String orderId;
@@ -136,7 +135,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 12. **Create OrderProducer.**  
     File: `OrderProducer.java`
     ```java
-    package com.microservices.orderservice;
+    package com.microservices.order_service;
 
     import org.springframework.cloud.stream.function.StreamBridge;
     import org.springframework.stereotype.Component;
@@ -156,7 +155,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 13. **Add REST Controller.**  
     File: `OrderController.java`
     ```java
-    package com.microservices.orderservice;
+    package com.microservices.order_service;
 
     import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestBody;
@@ -225,7 +224,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 19. **Create Event Consumer.**  
     File: `OrderEventConsumer.java`
     ```java
-    package com.microservices.notificationservice;
+    package com.microservices.notification_service;
 
     import org.springframework.context.annotation.Bean;
     import org.springframework.stereotype.Component;
@@ -243,7 +242,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 20. **Create Event Model.**  
     File: `OrderEvent.java`
     ```java
-    package com.microservices.notificationservice;
+    package com.microservices.notification_service;
 
     public class OrderEvent {
         private String orderId;
