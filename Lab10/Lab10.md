@@ -78,7 +78,16 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
      - Artifact: `order-service`
      - Dependencies:
        - Spring Web
+       - Spring Boot DevTools (optional)
        - Spring Cloud Stream Kafka
+
+   > ⚠️ **Note:** If `Spring Cloud Stream Kafka` is not available via UI, add this manually in `pom.xml`:
+   ```xml
+   <dependency>
+     <groupId>org.springframework.cloud</groupId>
+     <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+   </dependency>
+   ```
 
 9. **Unzip & Open in IDE.**
    - Extract to `OrderService` folder.
@@ -95,6 +104,8 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 11. **Create OrderEvent model.**  
     File: `src\main\java\com\microservices\orderservice\OrderEvent.java`
     ```java
+    package com.microservices.orderservice;
+
     public class OrderEvent {
         private String orderId;
         private String status;
@@ -125,6 +136,11 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 12. **Create OrderProducer.**  
     File: `OrderProducer.java`
     ```java
+    package com.microservices.orderservice;
+
+    import org.springframework.cloud.stream.function.StreamBridge;
+    import org.springframework.stereotype.Component;
+
     @Component
     public class OrderProducer {
         private final StreamBridge streamBridge;
@@ -140,6 +156,12 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 13. **Add REST Controller.**  
     File: `OrderController.java`
     ```java
+    package com.microservices.orderservice;
+
+    import org.springframework.web.bind.annotation.PostMapping;
+    import org.springframework.web.bind.annotation.RequestBody;
+    import org.springframework.web.bind.annotation.RestController;
+
     @RestController
     public class OrderController {
         private final OrderProducer orderProducer;
@@ -156,7 +178,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 
 14. **Run OrderService.**
     ```cmd
-    mvnw spring-boot:run
+    mvn spring-boot:run
     ```
     > Should start on port 8080 by default.
 
@@ -179,6 +201,14 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
       - Spring Web
       - Spring Cloud Stream Kafka
 
+    > ⚠️ If not available in start.spring.io UI, add manually:
+    ```xml
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+    </dependency>
+    ```
+
 17. **Unzip & Open in IDE.**
     - Extract to `NotificationService`.
     - Open in IntelliJ or VS Code.
@@ -195,6 +225,12 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 19. **Create Event Consumer.**  
     File: `OrderEventConsumer.java`
     ```java
+    package com.microservices.notificationservice;
+
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.stereotype.Component;
+    import java.util.function.Consumer;
+
     @Component
     public class OrderEventConsumer {
         @Bean
@@ -207,6 +243,8 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 20. **Create Event Model.**  
     File: `OrderEvent.java`
     ```java
+    package com.microservices.notificationservice;
+
     public class OrderEvent {
         private String orderId;
         private String status;
@@ -235,7 +273,7 @@ Learn how to use **Spring Cloud Stream** with **Kafka** as the message broker to
 
 21. **Run NotificationService.**
     ```cmd
-    mvnw spring-boot:run
+    mvn spring-boot:run
     ```
     > Should start on port 8081.
 
