@@ -19,7 +19,7 @@ This single lab walks you from a blank folder to two fully orchestrated microser
 
 ## 2  Generate Projects (Spring Initializr)
 
-Open **PowerShell as Administrator**, `cd` to the folder you want to use as **workspace**, then run:
+Open **PowerShell as Administrator**, `cd` to the folder you want to use as **lab17**, then run:
 
 ```powershell
 # user‑service
@@ -50,7 +50,7 @@ Remove-Item order-service.zip
 Resulting layout:
 
 ```
-workspace/
+lab17/
 ├── user-service/
 └── order-service/
 ```
@@ -170,7 +170,7 @@ _No `.dockerignore` is needed now._
 ### Build images (Administrator PowerShell)
 
 ```powershell
-cd workspace        # ensure you’re in the workspace root
+cd lab17        # ensure you’re in the lab17 root
 
 docker build -t user-service:1.0 ./user-service
 docker build -t order-service:1.0 ./order-service
@@ -200,7 +200,7 @@ minikube image load order-service:1.0
 ## 7  Kubernetes Manifests (`k8s/`)
 
 ```
-workspace/
+lab17/
 └─ k8s/
    ├─ user-service-configmap.yaml
    ├─ order-service-configmap.yaml
