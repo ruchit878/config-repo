@@ -62,7 +62,7 @@ lab17/
 > **Tip:** open both projects in **IntelliJ IDEA** and let it auto‑import Maven.
 
 ### user‑service  
-Package: `com.microservices.user_service`
+Location: `src/main/java/com/microservices/user_service/UserController.java`
 
 ```java
 package com.microservices.user_service;
@@ -92,7 +92,7 @@ app.name=${APP_NAME:user-service}
 ```
 
 ### order‑service  
-Package: `com.microservices.order_service`
+Location: `src/main/java/com/microservices/order_service/OrderController.java`
 
 ```java
 package com.microservices.order_service;
