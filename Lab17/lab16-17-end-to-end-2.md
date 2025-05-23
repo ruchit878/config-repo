@@ -1,5 +1,5 @@
 
-# **Lab 17: Deploy and Orchestrate Microservices on Kubernetes with ConfigMaps (Spring Boot 3.4.5)s**
+# **Lab 17: Deploy and Orchestrate Microservices on Kubernetes with ConfigMaps (Spring Boot 3.4.5)**
 
 This single lab walks you from a blank folder to two fully orchestrated microservices (**user‑service** and **order‑service**) running on Minikube.
 
